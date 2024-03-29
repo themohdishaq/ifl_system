@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<DashBoard />} />
+          {/* <Route path="/" element={<DashBoard />} /> */}
           <Route path="/messaging" element={<Messaging />} />
         </Routes>
       </BrowserRouter>
