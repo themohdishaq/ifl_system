@@ -1,21 +1,19 @@
-import { LineChart } from "@mui/x-charts/LineChart";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DashBoard from "./components/DashBoard";
+import Messaging from "./components/Messaging";
 
 function App() {
   return (
     <>
-      <Navbar />
-      {/* <LineChart
-        xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-        series={[
-          {
-            data: [2, 5.5, 2, 8.5, 1.5, 5],
-          },
-        ]}
-        width={500}
-        height={300}
-      /> */}
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<DashBoard />} />
+          <Route path="/messaging" element={<Messaging />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
