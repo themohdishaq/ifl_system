@@ -15,14 +15,13 @@ export default function DashBoard() {
           <TopBox />
         </div>
         <div className="m-3 row-span-3 grid md:grid-cols-4 gap-4">
-          <div className="bg-gray-50  md:col-span-2 rounded p-3 flex justify-center items-center">
-            {/* <LineGraph /> */}
-          </div>
+          <LineGraph />
+
           <div className="bg-gray-50  rounded p-3  flex justify-center items-center">
-            {/* <BarGraph /> */}
+            <BarGraph />
           </div>
           <div className="bg-gray-50  rounded p-3 flex justify-center items-center">
-            {/* <PieGraph /> */}
+            <PieGraph />
           </div>
         </div>
         <div className="m-3 row-span-3 grid md:grid-cols-3 grid-row-3 gap-4">
