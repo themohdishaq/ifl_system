@@ -1,5 +1,7 @@
 import React from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
+import LineGraph from "./LineGraph";
+import BarGraph from "./BarGraph";
+import PieGraph from "./PieGraph";
 
 export default function DashBoard() {
   return (
@@ -12,25 +14,18 @@ export default function DashBoard() {
           <div className="bg-green-400 rounded p-3">ksdjfla</div>
         </div>
         <div className="m-3 row-span-3 grid md:grid-cols-4 gap-4">
-          <div className="bg-green-300 md:col-span-2 rounded p-3">
-            <BarChart
-              xAxis={[
-                { scaleType: "band", data: ["group A", "group B", "group C"] },
-              ]}
-              series={[
-                { data: [4, 3, 5] },
-                { data: [1, 6, 3] },
-                { data: [2, 5, 6] },
-              ]}
-              width={300}
-              height={300}
-            />
+          <div className="bg-green-300 md:col-span-2 rounded p-3 flex justify-center items-center">
+            <LineGraph />
           </div>
-          <div className="bg-green-400 rounded p-3">ajsdfd</div>
-          <div className="bg-green-400 rounded p-3">ksdjfla</div>
+          <div className="bg-gareen-400 rounded p-3 flex justify-center items-center">
+            <BarGraph />
+          </div>
+          <div className="bg-green-400 rounded p-3 flex justify-center items-center">
+            <PieGraph />
+          </div>
         </div>
         <div className="m-3 row-span-3 grid md:grid-cols-3 grid-row-3 gap-4">
-          <div className="bg-green-300 rounded p-3">Students</div>
+          <div className="bg-green-300 rounded p-3"></div>
           <div className="bg-green-400 rounded p-3">Earnings</div>
           <div className="bg-green-400 rounded p-3">dfkjal</div>
         </div>
