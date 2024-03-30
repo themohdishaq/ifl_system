@@ -5,8 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Messaging() {
   const showToastMessage = (success) => {
     if (success) {
-      toast.success("Successfully Message Sent!", {
-      });
+      toast.success("Successfully Message Sent!", {});
     }
     else {
       toast.error("Some Field Required Here!", {});
