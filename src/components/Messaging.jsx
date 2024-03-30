@@ -16,10 +16,10 @@ export default function Messaging() {
     <div className='relative w-full p-8'>
       <div className='text-3xl '>Messaging</div>
       <div className='my-3'>
-          <a href="">Home</a>
+          <a href="/">Home</a>
         <span className='text-amber-600 hover:f'>
           <span className='mx-3'>/</span>
-          <a href="">Compose Messaging</a>
+          <a href="/messaging">Compose Messaging</a>
         </span>
       </div>
 
