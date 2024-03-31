@@ -32,11 +32,13 @@ export default function BarGraph() {
     };
   }, [window.innerWidth]);
   return (
-    <BarChart
-      xAxis={[{ scaleType: "band", data: ["group A", "group B", "group C"] }]}
-      series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
-      width={chartDimensions.width}
-      height={chartDimensions.height}
-    />
+    <div className="bg-slate-200 rounded p-3 flex justify-center items-center shadow-md">
+      <BarChart
+        xAxis={[{ scaleType: "band", data: ["group A", "group B", "group C"] }]}
+        series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
+        width={chartDimensions.width}
+        height={chartDimensions.height}
+      />
+    </div>
   );
 }
