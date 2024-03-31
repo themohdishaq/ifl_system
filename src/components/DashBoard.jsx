@@ -6,7 +6,7 @@ import PieGraph from "./PieGraph";
 export default function DashBoard() {
   return (
     <div className="relative w-full md:h-screen bg-black">
-      <div class="grid md:grid-row-7 h-full">
+      <div class="grid md:grid-row-7 h-full w-full">
         <div className="m-3 grid md:grid-cols-4 grid-row-4 gap-4">
           <div className="bg-green-400 rounded p-3">Earnings</div>
           <div className="bg-green-400 rounded p-3">Students</div>
