@@ -11,7 +11,7 @@ export default function PieGraph() {
     function handleResize() {
       if (window.innerWidth < 400) {
         setChartDimensions({
-          width: 300,
+          width: window.innerWidth * 0.8,
           height: window.innerHeight * 0.5,
         });
         console.log("object");
@@ -33,18 +33,20 @@ export default function PieGraph() {
   }, [window.innerWidth]);
 
   return (
-    <PieChart
-      series={[
-        {
-          data: [
-            { id: 0, value: 10, label: "series A" },
-            { id: 1, value: 15, label: "series B" },
-            { id: 2, value: 20, label: "series C" },
-          ],
-        },
-      ]}
-      width={chartDimensions.width}
-      height={chartDimensions.height}
-    />
+    <div className="bg-slate-200 rounded p-3 flex justify-center items-center shadow-md">
+      <PieChart
+        series={[
+          {
+            data: [
+              { id: 0, value: 10, label: "series A" },
+              { id: 1, value: 15, label: "series B" },
+              { id: 2, value: 20, label: "series C" },
+            ],
+          },
+        ]}
+        width={chartDimensions.width}
+        height={chartDimensions.height}
+      />
+    </div>
   );
 }
