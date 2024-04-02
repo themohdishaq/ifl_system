@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashBoard from "./components/DashBoard";
 import Messaging from "./components/Messaging";
 import StudentData from "./components/StudentData";
+import UserDashboard from "./components/UserDashboard";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<DashBoard />} />
           <Route path="/messaging" element={<Messaging />} />
           <Route path="/student_data" element={<StudentData />} />
+          <Route path="/user_dashboard" element={<UserDashboard />} />
         </Routes>
       </BrowserRouter>
     </>
