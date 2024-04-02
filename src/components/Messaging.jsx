@@ -13,7 +13,7 @@ export default function Messaging() {
   };
 
   return (
-    <div className='relative w-full md:h-screen p-8'>
+    <div className='relative w-full p-8'>
       <div className='text-3xl '>Messaging</div>
       <div className='my-3'>
           <a href="/">Home</a>
