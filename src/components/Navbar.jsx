@@ -6,7 +6,7 @@ const navigation = [
   { name: "Dashboard", href: "/", current: false },
   { name: "Messaging", href: "/messaging", current: false },
   { name: "Student Data", href: "/student_data", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "Profile", href: "/profile", current: false },
 ];
 
 function classNames(...classes) {
@@ -96,7 +96,7 @@ export default function Example() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/"
+                            href="/profile"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
