@@ -4,7 +4,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import Notification from "./Notification";
 const navigation = [
-  { name: "Dashboard", href: "/", current: false },
+  { name: "Admin Dashboard", href: "/", current: false },
+  { name: "User Dashboard", href: "/user_dashboard", current: false },
   { name: "Messaging", href: "/messaging", current: false },
   { name: "Student Data", href: "/student_data", current: false },
   { name: "Profile", href: "/profile", current: false },
