@@ -3,10 +3,17 @@ import StudentTable from "./StudentTable";
 
 export default function StudentData() {
   return (
-    <div className="  mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4 text-center">Student Data</h1>
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <div className="p-4">
+    <div className="  mx-auto p-8">
+      <div className='text-3xl '>User Profile</div>
+      <div className='my-3'>
+        <a href="/">Home</a>
+        <span className='text-amber-600 hover:f'>
+          <span className='mx-3'>/</span>
+          <a href="/messaging">User Profile</a>
+        </span>
+      </div>
+      <div className="bg-white border shadow-md rounded-lg overflow-hidden mt-7">
+        <div className="">
           <StudentTable />
         </div>
       </div>
