@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const { validationResult, body } = require("express-validator");
-const fetchuser = require("../Middleware/fetchcurrentUser");
+const fetchuser = require("../Middleware/fetchUser");
 const multer = require("multer");
 const Request = require("../Models/Request");
 const User = require("../Models/User");
 
 //multer to upload images
-
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "backend/public/images/");

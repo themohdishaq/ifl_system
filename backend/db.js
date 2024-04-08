@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
-const mongoURI = "mongodb://127.0.0.1";
+require("dotenv").config({ path: "../.env" });
+const mongoURI = process.env.mongoURI; // Corrected to match the environment variable name
+
 const connectToMongo = () => {
   mongoose
     .connect(mongoURI)
     .then(() => {
-      console.log("Connected to mongodb successfully");
+      console.log("Connected to MongoDB successfully");
     })
     .catch((error) => {
-      console.log("Erorr connecting mongo db :", error);
+      console.error("Error connecting to MongoDB:", error);
     });
 };
 
