@@ -9,6 +9,7 @@ connectToMongo();
 
 app.use(express.json());
 app.use(cors());
+app.use("/ifl_system/caseRequest", require("./Routes/caseRequest"));
 app.listen(port, () => {
   console.log(`IFL System is listening on port http://localhost:${port}`);
 });
