@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { validationResult, body } = require("express-validator");
-const fetchuser = require("../Middleware/fetchUser");
+const fetchStudent = require("../Middleware/fetchStudent");
 const multer = require("multer");
 const Request = require("../Models/Request");
 const User = require("../Models/User");
+const Notifications = require("../Models/Notifications");
 
 //multer to upload images
 var storage = multer.diskStorage({
@@ -21,7 +22,7 @@ const upload = multer({ storage: storage });
 //route for student to apply for request
 router.post(
   "/request_by_student",
-  fetchuser,
+  fetchStudent,
   [body("description", "Enter descriptionm of your case")],
   upload.single("image"),
   async (req, res) => {
@@ -31,15 +32,22 @@ router.post(
       console.log(response[0].msg);
       return res.status(400).json(response[0].msg);
     }
-    const req_student = await User.findById(req.user.id);
     try {
       const imageName = req.file.filename;
       const { description } = req.body;
-      await Request.create({
+      let request_by_student = await Request.create({
         student: req.user.id,
         status: "pending",
         photo: imageName,
         description: description,
+      });
+      if (!request_by_student) {
+        return res.json("Error sending request");
+      }
+      await Notifications.create({
+        user: req.user.id,
+        type: "student",
+        message: "Case Request has been sent successfully",
       });
       res.json("Case Request has been sent successfully");
     } catch (error) {
