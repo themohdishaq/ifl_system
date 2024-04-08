@@ -18,8 +18,8 @@ const ApprovedCaseSchema = new Schema({
     required: true,
   },
   payment_timeline: {
-    type: String,
-    required: true,
+    type: String, // here payment timeline will tell when the payment will be done
+    required: true, // e.g "1 month , 1 year 6 month etc"
   },
   postedDate: {
     type: Date,

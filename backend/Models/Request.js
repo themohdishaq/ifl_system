@@ -1,7 +1,7 @@
 const moongose = require("mongoose");
 const { Schema } = moongose;
 const RequestSchema = new Schema({
-  user: {
+  student: {
     type: moongose.Schema.Types.ObjectId,
     required: true,
   },

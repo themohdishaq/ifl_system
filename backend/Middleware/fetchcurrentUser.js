@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-const JWT_secret = " IFL system is here ";
+require("dotenv").config();
+const JWT_secret = process.env.JWT_SECRET;
 const fetchuser = (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
@@ -8,7 +9,7 @@ const fetchuser = (req, res, next) => {
       .send({ error: "Please authentictate by providing the token" });
   }
   try {
-    const data = jwt.verify(token, JWT_secret);
+    const data = jwt.verify(token, JWT_Secret);
     req.user = data.user;
     next();
   } catch (error) {

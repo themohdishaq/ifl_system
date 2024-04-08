@@ -6,6 +6,8 @@ const multer = require("multer");
 const Request = require("../Models/Request");
 const User = require("../Models/User");
 
+//multer to upload images
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "backend/public/images/");
@@ -17,14 +19,11 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+//route for student to apply for request
 router.post(
-  "/addpost",
+  "/request_by_student",
   fetchuser,
-  [
-    body("text", "Enter text of atleast 20 characters"),
-    body("topic", "Enter text of atleast 8 characters"),
-    body("type", "Enter text of atleast 2 characters"),
-  ],
+  [body("description", "Enter descriptionm of your case")],
   upload.single("image"),
   async (req, res) => {
     const errors = validationResult(req);
@@ -33,22 +32,19 @@ router.post(
       console.log(response[0].msg);
       return res.status(400).json(response[0].msg);
     }
-    const post_user = await User.findById(req.user.id);
+    const req_student = await User.findById(req.user.id);
     try {
       const imageName = req.file.filename;
-      const { text, topic, type } = req.body;
-      await Post.create({
-        text: text,
-        image: imageName,
-        user_name: post_user.name,
-        user: req.user.id,
-        comments: 0,
-        topic: topic,
-        type: type,
+      const { description } = req.body;
+      await Request.create({
+        student: req.user.id,
+        status: "pending",
+        photo: imageName,
+        description: description,
       });
-      res.json("Post uploaded succesfully");
+      res.json("Case Request has been sent successfully");
     } catch (error) {
-      res.json("Error uploading post");
+      res.json("Error sending request");
     }
   }
 );
