@@ -1,8 +1,8 @@
-const moongose = require("mongoose");
-const { Schema } = moongose;
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 const RequestSchema = new Schema({
   student: {
-    type: moongose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
 
@@ -20,5 +20,5 @@ const RequestSchema = new Schema({
   },
 });
 
-const Request = moongose.model("requests", RequestSchema);
+const Request = mongoose.model("requests", RequestSchema);
 module.exports = Request;

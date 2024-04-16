@@ -1,12 +1,12 @@
-const moongose = require("mongoose");
-const { Schema } = moongose;
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 const ApprovedCaseSchema = new Schema({
   admin: {
-    type: moongose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   request: {
-    type: moongose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   startDate: {
@@ -35,5 +35,5 @@ const ApprovedCaseSchema = new Schema({
   },
 });
 
-const ApprovedCase = moongose.model("approved_case", ApprovedCaseSchema);
+const ApprovedCase = mongoose.model("approved_case", ApprovedCaseSchema);
 module.exports = ApprovedCase;
