@@ -15,11 +15,11 @@ router.post("/create-user", [
     check('phone_no', 'Please enter a valid phone number').isLength({ min: 11 }),
     check('cnic', 'Please enter a valid CNIC').isLength({ min: 13 }),
     check('institution', 'Please enter a valid institution').not().isEmpty(),
-    check('class', 'Please enter a valid class').not().isEmpty()
+    check('class_level', 'Please enter a valid class').not().isEmpty()
 ], async (req, res) => {
     let success = false;
     const errors = validationResult(req);
-    let { full_name, father_name, email, password, phone_no, cnic, institution, class } = req.body;
+    let { full_name, father_name, email, password, phone_no, cnic, institution, class_level } = req.body;
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
@@ -46,7 +46,7 @@ router.post("/create-user", [
             phone_no,
             cnic,
             institution, 
-            class,
+            class_level,
         });
         const data = {
             user: {
