@@ -30,7 +30,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    class: {
+    class_level: {
         type: String,
         required: true
     }

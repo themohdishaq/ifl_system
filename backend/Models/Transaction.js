@@ -1,12 +1,13 @@
-const moongose = require("mongoose");
-const { Schema } = moongose;
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
 const TransactionSchema = new Schema({
   donor: {
-    type: moongose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   approved_case: {
-    type: moongose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   payment_no: {
@@ -19,5 +20,5 @@ const TransactionSchema = new Schema({
   },
 });
 
-const Transaction = moongose.model("transactions", TransactionSchema);
+const Transaction = mongoose.model("transactions", TransactionSchema);
 module.exports = Transaction;

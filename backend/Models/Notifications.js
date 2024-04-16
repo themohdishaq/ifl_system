@@ -1,9 +1,9 @@
-const moongose = require("mongoose");
-const { Schema } = moongose;
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 const NotificationSchema = new Schema({
   user: {
     //may be admin or student or donor
-    type: moongose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   type: {
@@ -16,5 +16,5 @@ const NotificationSchema = new Schema({
   },
 });
 
-const Notifications = moongose.model("notifications", NotificationSchema);
+const Notifications = mongoose.model("notifications", NotificationSchema);
 module.exports = Notifications;
