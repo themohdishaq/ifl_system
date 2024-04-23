@@ -1,7 +1,7 @@
 {
-  "name": "ifl_backend",
+  "name": "ifl_frontend",
   "version": "0.1.0",
-  "private": true,
+  "main": "tailwind.config.js",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -14,15 +14,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "bcrypt": "^5.1.1",
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "express-validator": "^7.0.1",
-    "jsonwebtoken": "^9.0.2",
     "material-react-table": "^2.12.1",
-    "mongoose": "^8.3.1",
-    "multer": "^1.4.5-lts.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
@@ -59,16 +51,12 @@
   "devDependencies": {
     "tailwindcss": "^3.4.3"
   },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "tailwind.config.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/themohdishaq/ifl_system.git"
   },
-  "author": "MSS",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/themohdishaq/ifl_system/issues"
-  },
-  "homepage": "https://github.com/themohdishaq/ifl_system#readme"
+  }
 }
