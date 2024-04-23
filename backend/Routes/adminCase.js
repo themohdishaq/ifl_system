@@ -65,4 +65,13 @@ router.post(
   }
 );
 
+router.get("/get_all_requested_cases", fetchAdmin, async (req, res) => {
+  try {
+    let requests = await Request.find({ status: "requested" });
+    res.json(requests);
+  } catch (error) {
+    res.json("Error fetching requests");
+  }
+});
+
 module.exports = router;

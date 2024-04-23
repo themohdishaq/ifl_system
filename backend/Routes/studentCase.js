@@ -4,7 +4,7 @@ const { validationResult, body } = require("express-validator");
 const fetchStudent = require("../Middleware/fetchStudent");
 const multer = require("multer");
 const Request = require("../Models/Request");
-const User = require("../Models/User");
+const Student = require("../Models/Student");
 const Notifications = require("../Models/Notifications");
 
 //multer to upload images
