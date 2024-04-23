@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { validationResult, body } = require("express-validator");
 const fetchStudent = require("../Middleware/fetchStudent");
+const fetchAdmin = require("../Middleware/fetchAdmin");
 const Request = require("../Models/Request");
 const Admin = require("../Models/Admin");
 const ApprovedCase = require("../Models/ApprovedCase");

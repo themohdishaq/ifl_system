@@ -52,7 +52,7 @@ router.post("/create-student", [
         });
         const data = {
             user: {
-                id: user.id
+                id: student.id
             }
         };
         const authToken = jwt.sign(data, JWT_SECRET);
@@ -85,7 +85,7 @@ router.post("/login-student", [
         }
         const data = {
             user: {
-                id: user.id
+                id: student.id
             }
         };
         const authToken = jwt.sign(data, JWT_SECRET);
