@@ -9,6 +9,8 @@ const navigation = [
   { name: "Messaging", href: "/messaging", current: false },
   { name: "Student Data", href: "/student_data", current: false },
   { name: "Profile", href: "/profile", current: false },
+  { name: "SignIn", href: "/signin", current: false },
+  { name: "SignUp", href: "/signup", current: false },
 ];
 
 function classNames(...classes) {

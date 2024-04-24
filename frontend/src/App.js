@@ -6,6 +6,8 @@ import UserDashboard from "./pages/UserDashboard"
 import Messaging from "./pages/Messaging"
 import StudentData from "./pages/StudentData"
 import Profile from "./pages/Profile"
+import SignIn from "./pages/SignIn"
+import SignUp from "./pages/SignUp";
 
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Dashboard/>} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn/>} />
           <Route path="/user_dashboard" element={<UserDashboard />} />
           <Route path="/messaging" element={<Messaging />} />
           <Route path="/student_data" element={<StudentData />} />
