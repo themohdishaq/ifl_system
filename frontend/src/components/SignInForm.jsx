@@ -1,4 +1,5 @@
-import * as React from 'react';
+import axios from 'axios';
+import {React, useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -34,13 +35,25 @@ import RadioGroup from '@mui/material/RadioGroup';
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const [data, setData] = useState({email:'', password:''})
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const info = new FormData(event.currentTarget);
+    console.log(info);
+    setData({
+      email: info.get('email'),
+      password: info.get('password'),
+    }  
+    );
+    console.log(data);
+    try {
+      const url = `http://localhost:3333/ifl_system/auth/login-${info.get('role')}`;
+      const {data:res} = await axios.post(url, data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -87,7 +100,8 @@ export default function SignIn() {
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
               style={{ display: 'flex', justifyContent: 'space-between' }}
-
+              id='role'
+              name='role'
             >
               <FormControlLabel value="student" control={<Radio />} label="Student" />
               <FormControlLabel value="donor" control={<Radio />} label="Donor" />
