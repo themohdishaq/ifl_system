@@ -6,8 +6,9 @@ const jwt = require('jsonwebtoken');
 const Student = require('../Models/Student');
 const Donor = require('../Models/Donor');
 const Admin = require('../Models/Admin');
+require("dotenv").config({ path: "./.env"})
 
-const JWT_SECRET = 'secret';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post("/create-student", [
     check('full_name', 'Please enter a valid name').not().isEmpty(),
