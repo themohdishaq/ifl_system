@@ -1,4 +1,5 @@
-import * as React from 'react';
+import axios from 'axios';
+import { React, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,6 +12,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // function Copyright(props) {
@@ -31,13 +34,43 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const [data, setData] = useState(null);
+  const [role, setRole] = useState('student');
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const info = new FormData(event.currentTarget);
+    console.log(info);
+    setRole(info.get('role'));
+    console.log(role);
+    const formData = {
+      full_name: info.get('firstName') + ' ' + info.get('lastName'),
+      email: info.get('email'),
+      password: info.get('password'),
+    };
+
+    if (info.get('role') === 'admin') {
+      formData.admin_role = info.get('role');
+    } else if (info.get('role') === 'donor') {
+      formData.father_name = info.get('lastName');
+      formData.phone_no = info.get('phone_no');
+      formData.cnic = info.get('cnic');
+      formData.profession = info.get('profession');
+    } else {
+      formData.father_name = info.get('lastName');
+      formData.phone_no = info.get('phone_no');
+      formData.cnic = info.get('cnic');
+      formData.institution = info.get('institution');
+      formData.class_level = info.get('class_level');
+    }
+    setData(formData);
+    try {
+      const url = `http://localhost:3333/ifl_system/auth/create-${info.get('role')}`;
+      const {data:res} = await axios.post(url, data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -46,7 +79,7 @@ export default function SignUp() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 1,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -81,6 +114,91 @@ export default function SignUp() {
                   autoComplete="family-name"
                 />
               </Grid>
+              {role === 'student' && (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="phone_no"
+                      label="Phone Number"
+                      id="phone_no"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="cnic"
+                      label="CNIC"
+                      id="cnic"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="institution"
+                      label="Institution"
+                      id="institution"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="class_level"
+                      label="Class Level"
+                      type="number"
+                      id="class_level"
+                    />
+                  </Grid>
+                </>
+              )}
+              {role === 'donor' && (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="phone_no"
+                      label="Phone Number"
+                      id="phone_no"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="cnic"
+                      label="CNIC"
+                      id="cnic"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="profession"
+                      label="Profession"
+                      id="profession"
+                    />
+                  </Grid>
+                </>
+              )}
+              {role === 'admin' && (
+                <>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="admin_role"
+                      label="Role"
+                      id="admin_role"
+                    />
+                  </Grid>
+                </>
+              )}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -103,20 +221,26 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  style={{ display: 'flex', justifyContent: 'space-between' }}
+                  id="role"
+                  name="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  <FormControlLabel value="student" control={<Radio />} label="Student" />
+                  <FormControlLabel value="donor" control={<Radio />} label="Donor" />
+                  <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+                </RadioGroup>
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            {/* Submit button */}
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
+            {/* Sign in link */}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
@@ -126,7 +250,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );
