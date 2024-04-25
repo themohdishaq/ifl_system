@@ -98,7 +98,6 @@ export default function SignIn() {
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
               style={{ display: 'flex', justifyContent: 'space-between' }}
               id='role'
               name='role'
