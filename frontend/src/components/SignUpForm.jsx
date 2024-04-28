@@ -40,7 +40,6 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const info = new FormData(event.currentTarget);
-    console.log(info);
     setRole(info.get('role'));
     console.log(role);
     const formData = {
@@ -64,6 +63,7 @@ export default function SignUp() {
       formData.class_level = info.get('class_level');
     }
     setData(formData);
+    console.log(formData);
     try {
       const url = `http://localhost:3333/ifl_system/auth/create-${info.get('role')}`;
       const {data:res} = await axios.post(url, data);
@@ -236,14 +236,12 @@ export default function SignUp() {
                 </RadioGroup>
               </Grid>
             </Grid>
-            {/* Submit button */}
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
-            {/* Sign in link */}
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

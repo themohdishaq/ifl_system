@@ -40,7 +40,6 @@ export default function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const info = new FormData(event.currentTarget);
-    console.log(info);
     setData({
       email: info.get('email'),
       password: info.get('password'),
@@ -125,7 +124,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
