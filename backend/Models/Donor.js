@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const DonorSchema = new Schema({
-    full_name: {
+    first_name: {
         type: String,
         required: true
     },
-    father_name: {
+    last_name: {
         type: String,
         required: true
     },

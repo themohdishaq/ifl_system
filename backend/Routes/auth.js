@@ -11,8 +11,8 @@ require("dotenv").config({ path: "./.env"})
 const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post("/create-student", [
-    check('firstName', 'Please enter a valid name').not().isEmpty(),
-    check('lastName', 'Please enter a valid name').not().isEmpty(),
+    check('first_name', 'Please enter a valid name').not().isEmpty(),
+    check('last_name', 'Please enter a valid name').not().isEmpty(),
     check('email', 'Please enter a valid email').isEmail(),
     check('password', 'Please enter a valid password').isLength({ min: 6 }),
     check('phone_no', 'Please enter a valid phone number').isLength({ min: 11 }),
@@ -21,10 +21,9 @@ router.post("/create-student", [
     check('class_level', 'Please enter a valid class').not().isEmpty()
 ], async (req, res) => {
     let success = false;
-    let full_name;
     let hashPassword;
     const errors = validationResult(req);
-    let { firstName, lastName, email, password, phone_no, cnic, institution, class_level } = req.body;
+    let { first_name, last_name, email, password, phone_no, cnic, institution, class_level } = req.body;
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
@@ -43,10 +42,9 @@ router.post("/create-student", [
         }
         const salt = await bcrypt.genSalt(10);
         hashPassword = await bcrypt.hash(password, salt);
-        full_name = firstName + " " + lastName;
         student = await Student.create({
-            full_name: full_name,
-            father_name: lastName,
+            first_name,
+            last_name,
             email,
             password: hashPassword,
             phone_no,
@@ -102,8 +100,8 @@ router.post("/login-student", [
 });
  
 router.post("/create-donor", [
-    check('firstName', 'Please enter a name').not().isEmpty(),
-    check('lastName', 'Please enter a name').not().isEmpty(),
+    check('first_name', 'Please enter a name').not().isEmpty(),
+    check('last_name', 'Please enter a name').not().isEmpty(),
     check('email', 'Please enter a valid email').isEmail(),
     check('password', 'Please enter a valid password').isLength({ min: 6 }),
     check('phone_no', 'Please enter a valid phone number').isLength({ min: 11 }),
@@ -111,10 +109,9 @@ router.post("/create-donor", [
     check('profession','Please enter a profession').not().isEmpty()
 ], async (req, res) => {
     let success = false;
-    let full_name;
     let hashPassword;
     const errors = validationResult(req);
-    let { firstName, lastName, email, password, phone_no, cnic, profession } = req.body;
+    let { first_name, last_name, email, password, phone_no, cnic, profession } = req.body;
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
@@ -133,10 +130,9 @@ router.post("/create-donor", [
         }
         const salt = await bcrypt.genSalt(10);
         hashPassword = await bcrypt.hash(password, salt);
-        full_name = firstName + " " + lastName;
         donor = await Donor.create({
-            full_name: full_name,
-            father_name: lastName,
+            first_name,
+            last_name,
             email,
             password: hashPassword,
             phone_no,
@@ -191,17 +187,17 @@ router.post("/login-donor", [
 });
 
 router.post("/create-admin", [
-    check('firstName', 'Please enter a name').not().isEmpty(),
-    check('lastName', 'Please enter a name').not().isEmpty(),
+    check('first_name', 'Please enter a name').not().isEmpty(),
+    check('last_name', 'Please enter a name').not().isEmpty(),
     check('email', 'Please enter a valid email').isEmail(),
     check('password', 'Please enter a valid password').isLength({ min: 6 }),
     check('admin_role', 'Please enter an admin role').not().isEmpty()
 ], async (req, res) => {
     let success = false;
-    let full_name;
     let hashPassword;
+    let full_name;
     const errors = validationResult(req);
-    let { firstName, lastName, email, password, admin_role } = req.body;
+    let { first_name, last_name, email, password, admin_role } = req.body;
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
@@ -212,7 +208,7 @@ router.post("/create-admin", [
         }
         const salt = await bcrypt.genSalt(10);
         hashPassword = await bcrypt.hash(password, salt);
-        full_name = firstName + " " + lastName;
+        full_name = first_name + " " + last_name;
         admin = await Admin.create({
             full_name: full_name,
             email,
