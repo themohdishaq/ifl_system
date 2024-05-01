@@ -56,4 +56,19 @@ router.post(
   }
 );
 
+router.get("/student/case_applications", fetchStudent, async (req, res) => {
+  try {
+    const student = await Student.findById(req.user.id);
+    if (!student) {
+      return res.json("Student not found");
+    }
+    const case_applications = await Request.find({ student: req.user.id });
+    if (!case_applications) {
+      return res.json("No case applications found");
+    }
+    res.json(case_applications);
+  } catch (error) {
+    res.json("Error fetching case applications");
+  }
+});
 module.exports = router;
