@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { validationResult, body } = require("express-validator");
 const fetchStudent = require("../Middleware/fetchStudent");
+const fetchAdmin = require("../Middleware/fetchAdmin");
 const Request = require("../Models/Request");
 const Admin = require("../Models/Admin");
 const ApprovedCase = require("../Models/ApprovedCase");
@@ -64,5 +65,14 @@ router.post(
     }
   }
 );
+
+router.get("/get_all_requested_cases", fetchAdmin, async (req, res) => {
+  try {
+    let requests = await Request.find({ status: "requested" });
+    res.json(requests);
+  } catch (error) {
+    res.json("Error fetching requests");
+  }
+});
 
 module.exports = router;
