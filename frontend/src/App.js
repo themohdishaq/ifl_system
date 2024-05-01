@@ -10,6 +10,9 @@ import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp";
 import userAuthStore from "./store/userAuthStore/userAuthStore";
 import { AdminRoute, DonorRoute, StudentRoute } from "./routes/RouteCegories";
+import StudentProfile from "./pages/Student/StudentProfile";
+import StudentApplication from "./pages/Student/StudentApplication";
+import StudentCurrentCases from "./pages/Student/StudentCurrentCases";
 
 
 function App() {
@@ -59,7 +62,9 @@ function App() {
 
           {/* For temporary purpose */}
           <Route path="/" element={<Dashboard/>} />
-          <Route path="/student" element={<Dashboard/>} />
+          <Route path="/student_profile" element={<StudentProfile/>} />
+          <Route path="/student_application" element={<StudentApplication/>} />
+          <Route path="/student_current_cases" element={<StudentCurrentCases/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn/>} />
           <Route path="/user_dashboard" element={<UserDashboard />} />
