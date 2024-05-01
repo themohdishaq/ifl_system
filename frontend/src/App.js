@@ -8,14 +8,56 @@ import StudentData from "./pages/StudentData"
 import Profile from "./pages/Profile"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp";
+import userAuthStore from "./store/userAuthStore/userAuthStore";
+import { AdminRoute, DonorRoute, StudentRoute } from "./routes/RouteCegories";
 
 
 function App() {
+  const user = userAuthStore((state) => state.user);
   return (
     <>
       <BrowserRouter>
         <Navbar />
         <Routes>
+
+          {/* Authentication Routes */}
+          {/* <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn/>} /> */}
+
+          {/* Public Available Routes */}
+          {/* <Route path="/" element={<LandingPage/>}/> */}
+
+          {/* Admin Routes ---------------------------------------------------------------- */}
+          <Route
+            path="/admin/admin_dashboard"
+            element={
+              <AdminRoute user={user}>
+                {/* <AdminDashboard/> */}
+              </AdminRoute>
+            }
+          />
+
+          {/* Student Routes --------------------------------------------------------------- */}
+          <Route
+            path="/student/student_dashboard"
+            element={
+              <StudentRoute user={user}>
+                {/* <StudentDashboard/> */}
+              </StudentRoute>
+            }
+          />
+
+            {/* Donor Routes --------------------------------------------------------------- */}
+            <Route
+            path="/donor/donor_dashboard"
+            element={
+              <DonorRoute user={user}>
+                {/* <DonorDashboard/> */}
+              </DonorRoute>
+            }
+          />
+
+          {/* For temporary purpose */}
           <Route path="/" element={<Dashboard/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn/>} />
