@@ -6,26 +6,26 @@ const Request = require("../Models/Request");
 const Admin = require("../Models/Admin");
 const Donor = require("../Models/Donor");
 const ApprovedCase = require("../Models/ApprovedCase");
+const WorksOn = require("../Models/WorksOn");
 
 //show all verified cases to donor which are approved by admin whose date has been started but not ended
 
-// !!!!!!  rememeber here i did not remove the feature where if case is under  a specified dnor still that case is visibkle
-//!!!! will remove that thing soon
-
 router.get(
-  "/get_all_approved_cases_by_donor",
+  "/donor/all-approved-cases",
   fetchDonor,
 
   async (req, res) => {
     const currentDate = new Date();
     try {
-      const approved_cases = await ApprovedCase.find({
+      const approvedCases = await ApprovedCase.find({
         endDate: { $gt: currentDate },
+        _id: { $nin: await WorksOn.distinct("approved_case") },
       }).populate("request");
-      if (!approved_cases) {
+
+      if (!approvedCases) {
         return res.json("No approved cases found");
       }
-      res.json(approved_cases);
+      res.json(approvedCases);
     } catch (error) {
       res.json("Error fetching approved cases");
     }
@@ -35,7 +35,7 @@ router.get(
 //route to sponser case by donor
 
 router.post(
-  "/sponser_case_by_donor/:id",
+  "/donor/sponser-case--by-donor/:id",
   fetchDonor,
   [body("commited_payments", "Enter the commited payments")],
   async (req, res) => {
@@ -90,4 +90,102 @@ router.post(
     }
   }
 );
+
+//route to show all cases sponsered by donor
+
+router.get("/donor/sponsered-cases", fetchDonor, async (req, res) => {
+  try {
+    const sponseredCases = await WorksOn.find({ donor: req.user.id })
+      .populate("approved_case")
+      .populate("request");
+
+    res.json(sponseredCases);
+  } catch (error) {
+    res.json("Error fetching sponsered cases");
+  }
+});
+
+//route to show all cases completed by donor
+router.get("/donor/completed-cases", fetchDonor, async (req, res) => {
+  try {
+    const completedCases = await WorksOn.find({
+      donor: req.user.id,
+      commited_payments: { $eq: "$completed_payments" },
+    })
+      .populate("approved_case")
+      .populate("request");
+
+    res.json(completedCases);
+  } catch (error) {
+    res.json("Error fetching completed cases");
+    console.log(error);
+  }
+});
+
+//route to show all cases in progress by donor
+
+router.get("/donor/in-progress-cases", fetchDonor, async (req, res) => {
+  try {
+    const cases = await WorksOn.find({
+      donor: req.user.id,
+      committed_payments: { $lt: "$completed_payments" },
+    });
+
+    return res.json(cases);
+  } catch (error) {
+    console.log(error);
+    return res.json("Error loading cases");
+  }
+});
+
+// view case by donor
+router.get("/donor/view-case/:id", fetchDonor, async (req, res) => {
+  try {
+    const case_view = await ApprovedCase.findById(req.params.id);
+    if (!case_view) {
+      return res.json("No case to view");
+    }
+    return res.json(case_view);
+  } catch (error) {
+    console.log(error);
+    return res.json("Error loading case");
+  }
+});
+
+// router.post("/donor/donate-case/:id",fetchDonor,async(req,res)=>{
+//   const donatingCase=ApprovedCase.findById(req.params.id);
+//   const workson=WorksOn.find({approved_case:req.params.id,donor:req.user.id});
+//   if(!workson){
+//     return res.json("You have not sponsered this case");
+//   }
+// });
+
+//view student profile  by clicking on case
+router.get(
+  "/donor/sponsered-student-profile/:id",
+  fetchDonor,
+  async (req, res) => {
+    try {
+      const workson = await WorksOn.find({
+        approved_case: req.params.id,
+        donor: req.user.id,
+      });
+      if (!workson) {
+        return res.json("You have not sponsered this case");
+      }
+      const case_sponsered = await ApprovedCase.findById(req.params.id)
+        .populate("request")
+        .populate("student")
+        .select("-password");
+
+      return res.json(case_sponsered.request.student);
+    } catch (error) {
+      console.log(error);
+      res.json("Error in viewing user profile");
+    }
+  }
+);
+
+//do a payment for case
+
 module.exports = router;
