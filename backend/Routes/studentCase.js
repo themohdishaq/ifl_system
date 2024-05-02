@@ -9,23 +9,23 @@ const Notifications = require("../Models/Notifications");
 const ApprovedCase = require("../Models/ApprovedCase");
 
 //multer to upload images
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "backend/public/images/");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "backend/public/images/");
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueSuffix = Date.now();
+//     cb(null, uniqueSuffix + file.originalname);
+//   },
+// });
+// const upload = multer({ storage: storage });
 
 //route for student to apply for request
 router.post(
   "/student/request_by_student",
   fetchStudent,
-  [body("description", "Enter descriptionm of your case")],
-  upload.single("image"),
+  // [body("description", "Enter descriptionm of your case")],
+  // upload.single("image"),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -34,14 +34,16 @@ router.post(
       return res.status(400).json(response[0].msg);
     }
     try {
-      const imageName = req.file.filename;
-      const { description } = req.body;
+      // const imageName = req.file.filename;
+      const { title, description } = req.body;
       let request_by_student = await Request.create({
         student: req.user.id,
         status: "pending",
-        photo: imageName,
+        // photo: imageName,
+        title: title,
         description: description,
       });
+      console.log(request_by_student);
       if (!request_by_student) {
         return res.json("Error sending request");
       }

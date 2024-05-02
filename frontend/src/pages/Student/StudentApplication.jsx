@@ -6,53 +6,33 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 export default function StudentApplication() {
-    const closeRef = useRef(null);
-    const [studentApplicationImage, setStudentApplicationImage] = useState({ image: "" });
-    const onImageChange = (e) => {
-        if (e.target.files.length > 0) {
-            setStudentApplicationImage(e.target.files[0]);
-        }
-    };
+
     const studentApplicationMutation = useMutation({
         mutationFn: async (values) => {
-            const url = `http://localhost:3333/ifl_system/student/request_by_student`;
-
-            // Create a new FormData instance
-            const formData = new FormData();
-
-            // Append the form values and the image file to the FormData instance
-            Object.keys(values).forEach(key => formData.append(key, values[key]));
-            formData.append('image', studentApplicationImage);
-            console.log(formData.get('image'));
-            console.log(formData.get('title'));
-            console.log(formData.get('description'));
-
-
-            // Send the FormData instance in the POST request
-            return axios.post(url, formData);
+            console.log(values);
+            try {
+                const response = await axios.post('http://localhost:3333/ifl_system/student/request_by_student', values, {
+                    headers: {
+                        'auth-token': ''
+                    }
+                });
+                return response.data;
+            } catch (error) {
+                throw error;
+            }
         },
         onError: (error) => {
             console.log(error);
             toast.error("Error sending request...");
         },
         onSuccess: (data) => {
-            if (data.data.error) {
-                toast.error(data.data.error);
+            if (data && data.error) {
+                toast.error(data.error);
             } else {
-                toast.success(data.data);
-                closeRef.current.click();   
+                toast.success("Request sent successfully!");
             }
         },
     });
-
-    // const createFormData=(values)=>{
-    //     console.log(values.title)
-    //     const formData = new FormData();
-    //     formData.append("image", studentApplicationImage.image);
-    //     formData.append("title", values.title);
-    //     formData.append("description", values.description);
-    //     studentApplicationMutation.mutate(formData);
-    // }
 
     return (
         <div>
@@ -62,7 +42,12 @@ export default function StudentApplication() {
                     description: ""
                 }}
                 validationSchema={studentApplicationSchema}
-                onSubmit={studentApplicationMutation.mutate}
+                onSubmit={(values) => {
+                    studentApplicationMutation.mutate({
+                        title: values.title,
+                        description: values.description,
+                    });
+                }}
             >
                 {({
                     errors,
@@ -82,23 +67,23 @@ export default function StudentApplication() {
                                 <Typography variant="body">/ </Typography>
                                 <Link href="/messaging"> User Profile</Link>
                             </Grid>
-                            <Grid item xs={12} lg={4}>
+                            {/* <Grid item xs={12} lg={4}>
                                 <Paper className="flex flex-col justify-center items-center p-1 md:p-5">
-                                    <div className="m-5 rounded-full ">
-                                        {/* <input
+                                    <div className="m-5 rounded-full "> */}
+                            {/* <input
                                             type="file"
                                             accept="image/*"
                                             id="imageInput"
                                             style={{ display: 'none' }}
                                             onChange={onImageChange}
                                         /> */}
-                                        {/* <label htmlFor="imageInput">
+                            {/* <label htmlFor="imageInput">
                                             <img src={selectedImage ? URL.createObjectURL(selectedImage) : 'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg'} alt="" width='150px' height='150px' />
                                         </label> */}
-                                        <i className="fa-regular fa-images mx-2 my-2" ></i> 
+                            {/* <i className="fa-regular fa-images mx-2 my-2" ></i> 
                                          <input type="file" accept='image/*' onChange={onImageChange} /> 
-                                    </div>
-                                    {/* <div className='flex justify-center items-center'>
+                                    </div> */}
+                            {/* <div className='flex justify-center items-center'>
                                         <Button
                                             variant="contained"
                                             component="span"
@@ -107,8 +92,8 @@ export default function StudentApplication() {
                                             Upload
                                         </Button>
                                     </div> */}
-                                </Paper>
-                            </Grid>
+                            {/* </Paper>
+                            </Grid> */}
                             <Grid item xs={12} lg={8}>
                                 <Grid container spacing={3}>
                                     <Grid item xs={12} lg={12}>
@@ -120,7 +105,7 @@ export default function StudentApplication() {
                                                         <TextField
                                                             required
                                                             fullWidth
-                                                            id="titel"
+                                                            id="title"
                                                             label="Title"
                                                             name="title"
                                                             sx={{ mb: 3 }}
