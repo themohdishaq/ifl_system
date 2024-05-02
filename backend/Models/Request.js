@@ -5,12 +5,15 @@ const RequestSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-
   status: {
     type: String,
     required: true,
   },
-  photo: {
+  // photo: {
+  //   type: String,
+  //   required: true,
+  // },
+  title: {
     type: String,
     required: true,
   },
