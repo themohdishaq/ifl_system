@@ -30,13 +30,18 @@ const theme = createTheme();
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -234,31 +239,37 @@ export default function SignUp() {
         }) => (
           <Form>
             <ThemeProvider theme={defaultTheme}>
-              <Container component="main" maxWidth="sm" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+              <Container
+                component="main"
+                maxWidth="sm"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <CssBaseline />
                 <Box
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                     boxShadow: 3,
-                    padding: '6%',
-                    margin: '6%',
+                    padding: "6%",
+                    margin: "6%",
                     borderRadius: 2,
                   }}
                 >
-<<<<<<< HEAD
                   <Typography component="h6" variant="h6">
                     Create {activeForm} Account
                   </Typography>
-=======
->>>>>>> b852c9841928d21f132194e782f3f395ca0d4492
 
                   <Grid container spacing={3} justifyContent="center">
                     <Grid item xs={12} sm={4}>
                       <Button
                         fullWidth
-                        size='large'
+                        size="large"
                         variant={
                           activeForm === "Student" ? "contained" : "outlined"
                         }
@@ -270,7 +281,7 @@ export default function SignUp() {
                     <Grid item xs={12} sm={4}>
                       <Button
                         fullWidth
-                        size='large'
+                        size="large"
                         variant={
                           activeForm === "Donor" ? "contained" : "outlined"
                         }
@@ -282,8 +293,7 @@ export default function SignUp() {
                     <Grid item xs={12} sm={4}>
                       <Button
                         fullWidth
-                        size='large'
-
+                        size="large"
                         variant={
                           activeForm === "Admin" ? "contained" : "outlined"
                         }
@@ -294,11 +304,7 @@ export default function SignUp() {
                     </Grid>
                   </Grid>
 
-<<<<<<< HEAD
                   <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-=======
-                  <Avatar sx={{ m: 1, mt: 3, bgcolor: 'secondary.main' }}>
->>>>>>> b852c9841928d21f132194e782f3f395ca0d4492
                     <LockOutlinedIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5" marginBottom={3}>
@@ -321,13 +327,9 @@ export default function SignUp() {
                           value={values.first_name}
                           error={errors.first_name && touched.first_name}
                           helperText={
-<<<<<<< HEAD
                             errors.firstName &&
                             touched.firstName &&
                             errors.firstName
-=======
-                            errors.first_name && touched.first_name && errors.first_name
->>>>>>> b852c9841928d21f132194e782f3f395ca0d4492
                           }
                         />
                       </Grid>
@@ -344,13 +346,9 @@ export default function SignUp() {
                           value={values.last_name}
                           error={errors.last_name && touched.last_name}
                           helperText={
-<<<<<<< HEAD
                             errors.lastName &&
                             touched.lastName &&
                             errors.lastName
-=======
-                            errors.last_name && touched.last_name && errors.last_name
->>>>>>> b852c9841928d21f132194e782f3f395ca0d4492
                           }
                         />
                       </Grid>

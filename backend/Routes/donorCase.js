@@ -7,6 +7,7 @@ const Admin = require("../Models/Admin");
 const Donor = require("../Models/Donor");
 const ApprovedCase = require("../Models/ApprovedCase");
 const WorksOn = require("../Models/WorksOn");
+const Transaction = require("../Models/Transaction");
 
 //show all verified cases to donor which are approved by admin whose date has been started but not ended
 
@@ -138,7 +139,7 @@ router.get("/donor/in-progress-cases", fetchDonor, async (req, res) => {
   }
 });
 
-// view case by donor
+// view case by donor the
 router.get("/donor/view-case/:id", fetchDonor, async (req, res) => {
   try {
     const case_view = await ApprovedCase.findById(req.params.id);
@@ -151,14 +152,6 @@ router.get("/donor/view-case/:id", fetchDonor, async (req, res) => {
     return res.json("Error loading case");
   }
 });
-
-// router.post("/donor/donate-case/:id",fetchDonor,async(req,res)=>{
-//   const donatingCase=ApprovedCase.findById(req.params.id);
-//   const workson=WorksOn.find({approved_case:req.params.id,donor:req.user.id});
-//   if(!workson){
-//     return res.json("You have not sponsered this case");
-//   }
-// });
 
 //view student profile  by clicking on case
 router.get(
@@ -186,6 +179,45 @@ router.get(
   }
 );
 
-//do a payment for case
+//do a payment for case by donor here id is of specific case which donor has sponsered
+router.post("/donor/pay_sponsered_case/:id", fetchDonor, async (req, res) => {
+  try {
+    const workson = await WorksOn.findOne({
+      approved_case: req.params.id,
+      donor: req.user.id,
+    })
+      .populate("approved_case")
+      .populate("request");
+    if (!workson) {
+      return res.json("You have not sponsered this case");
+    }
+    if (workson.commited_payments === workson.completed_payments) {
+      return res.json("You have already paid the total payments");
+    }
 
+    const transaction = await Transaction.create({
+      donor: req.user.id,
+      approved_case: req.params.id,
+      payment_no: workson.completed_payments + 1,
+      status: "completed",
+    });
+    workson.completed_payments = workson.completed_payments + 1;
+    await workson.save();
+
+    await Notifications.create({
+      user: req.user.id,
+      type: "donor",
+      message: `Payment done successfully for case ${workson.approved_case.request.title}`,
+    });
+    await Notifications.create({
+      user: workson.approved_case.request.student,
+      type: "user",
+      message: `Payment done successfully for your case ${workson.approved_case.request.title}`,
+    });
+    return res.json("Payment done successfully");
+  } catch (error) {
+    console.log(error);
+    return res.json("Error in payment");
+  }
+});
 module.exports = router;
