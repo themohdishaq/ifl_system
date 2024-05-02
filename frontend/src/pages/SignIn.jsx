@@ -46,11 +46,12 @@ export default function SignIn() {
   useEffect(() => {
     logout();
   }, []);
-  
+
   const loginMutation = useMutation({
-    mutationFn: (values) => {const url = `http://localhost:3333/ifl_system/auth/login-${role}`;
-        console.log(values);
-        return axios.post(url, values);
+    mutationFn: (values) => {
+      const url = `http://localhost:3333/ifl_system/auth/login-${role}`;
+      console.log(values);
+      return axios.post(url, values);
     },
     onError: (error) => {
       console.log(error);
@@ -98,17 +99,17 @@ export default function SignIn() {
         }) => (
           <Form>
             <ThemeProvider theme={defaultTheme}>
-              <Container component="main" maxWidth="xs">
+              <Container component="main" maxWidth="sm" style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                 <CssBaseline />
                 <Box
                   sx={{
-                    marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     boxShadow: 3,
-                    padding: 3,
-                    borderRadius: 1,
+                    padding: '6%',
+                    margin: '6%',
+                    borderRadius: 2,
                   }}
                 >
                   <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -117,7 +118,7 @@ export default function SignIn() {
                   <Typography component="h1" variant="h5">
                     Sign in
                   </Typography>
-                  <Box component="form" noValidate sx={{ mt: 1 }}>
+                  <Box component="form" noValidate sx={{ my: 1 }}>
                     <TextField
                       margin="normal"
                       required
@@ -150,7 +151,7 @@ export default function SignIn() {
                         errors.password && touched.password && errors.password
                       }
                     />
-                    <RadioGroup
+                    {/* <RadioGroup
                       row
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       style={{ display: 'flex', justifyContent: 'space-between' }}
@@ -162,13 +163,52 @@ export default function SignIn() {
                       <FormControlLabel value="student" control={<Radio />} label="Student" />
                       <FormControlLabel value="donor" control={<Radio />} label="Donor" />
                       <FormControlLabel value="admin" control={<Radio />} label="Admin" />
-                    </RadioGroup>
+                    </RadioGroup> */}
+
+                    <Grid container justifyContent="center" marginY={1} spacing={3}>
+                      <Grid item xs={12} sm={4}>
+                        <Button
+                          fullWidth
+                          value="student"
+                          variant={
+                            role === "student" ? "contained" : "outlined"
+                          }
+                          onClick={(e) => setRole(e.target.value)}
+                        >
+                          Student
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <Button
+                          fullWidth
+                          value="donor"
+                          variant={
+                            role === "donor" ? "contained" : "outlined"
+                          }
+                          onClick={(e) => setRole(e.target.value)}
+                        >
+                          Donor
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <Button
+                          fullWidth
+                          value="admin"
+                          variant={
+                            role === "admin" ? "contained" : "outlined"
+                          }
+                          onClick={(e) => setRole(e.target.value)}
+                        >
+                          Admin
+                        </Button>
+                      </Grid>
+                    </Grid>
 
                     <Button
                       type="submit"
                       fullWidth
                       variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
+                      sx={{ mt: 2, mb: 2 }}
                       onClick={handleSubmit}
                     >
                       Sign In
@@ -188,7 +228,7 @@ export default function SignIn() {
                     </Grid>
                   </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{ mt: 1, mb: 1 }} />
               </Container>
             </ThemeProvider>
           </Form>

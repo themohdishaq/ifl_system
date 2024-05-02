@@ -10,7 +10,7 @@ const fetchStudent = (req, res, next) => {
       .send({ error: "Please authentictate b-y providing the token" });
   }
   try {
-    const data = jwt.verify(token, JWT_Secret);
+    const data = jwt.verify(token, JWT_secret);
     req.user = data.user;
     next();
   } catch (error) {
