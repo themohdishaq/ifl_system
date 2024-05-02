@@ -23,18 +23,18 @@ import { useMutation } from '@tanstack/react-query';
 import { AdminSignupSchema, DonorSignupSchema, SignupSchema, StudentSignupSchema } from '../utils/Schemas';
 const theme = createTheme();
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const defaultTheme = createTheme();
 
@@ -116,8 +116,8 @@ export default function SignUp() {
     case 'Student':
       initialFormValue = {
         email: "",
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         password: "",
         phone_no: "",
         cnic: "",
@@ -128,8 +128,8 @@ export default function SignUp() {
     case 'Donor':
       initialFormValue = {
         email: "",
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         password: "",
         phone_no: "",
         cnic: "",
@@ -139,8 +139,8 @@ export default function SignUp() {
     case 'Admin':
       initialFormValue = {
         email: "",
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         password: "",
         admin_role: "",
       };
@@ -149,8 +149,8 @@ export default function SignUp() {
       initialFormValue = {
         email: "",
         password: "",
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
       };
   }
 
@@ -160,8 +160,8 @@ export default function SignUp() {
       case 'Student':
         valuesAssign = {
           email: values.email,
-          firstName: values.firstName,
-          lastName: values.lastName,
+          first_name: values.first_name,
+          last_name: values.last_name,
           password: values.password,
           phone_no: values.phone_no,
           cnic: values.cnic,
@@ -172,8 +172,8 @@ export default function SignUp() {
       case 'Donor':
         valuesAssign = {
           email: values.email,
-          firstName: values.firstName,
-          lastName: values.lastName,
+          first_name: values.first_name,
+          last_name: values.last_name,
           password: values.password,
           phone_no: values.phone_no,
           cnic: values.cnic,
@@ -183,8 +183,8 @@ export default function SignUp() {
       case 'Admin':
         valuesAssign = {
           email: values.email,
-          firstName: values.firstName,
-          lastName: values.lastName,
+          first_name: values.first_name,
+          last_name: values.last_name,
           password: values.password,
           admin_role: values.admin_role,
         };
@@ -192,8 +192,8 @@ export default function SignUp() {
       default:
         valuesAssign = {
           email: values.email,
-          firstName: values.firstName,
-          lastName: values.lastName,
+          first_name: values.first_name,
+          last_name: values.last_name,
           password: values.password,
         };
     }
@@ -205,8 +205,8 @@ export default function SignUp() {
       <Formik
         initialValues={{
           email: "",
-          firstName: "",
-          lastName: "",
+          first_name: "",
+          last_name: "",
           password: "",
           phone_no: "",
           cnic: "",
@@ -230,29 +230,26 @@ export default function SignUp() {
         }) => (
           <Form>
             <ThemeProvider theme={defaultTheme}>
-              <Container component="main" maxWidth="xs">
+              <Container component="main" maxWidth="sm" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                 <CssBaseline />
                 <Box
                   sx={{
-                    marginTop: theme.spacing(3),
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    bgcolor: "background.paper",
-                    boxShadow: theme.shadows[3],
-                    borderRadius: theme.shape.borderRadius,
-                    padding: theme.spacing(3),
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    boxShadow: 3,
+                    padding: '6%',
+                    margin: '6%',
+                    borderRadius: 2,
                   }}
                 >
-
-                  <Typography component="h6" variant="h6">
-                    Create {activeForm} Account
-                  </Typography>
-
 
                   <Grid container spacing={3} justifyContent="center">
                     <Grid item xs={12} sm={4}>
                       <Button
+                        fullWidth
+                        size='large'
+
                         variant={
                           activeForm === "Student" ? "contained" : "outlined"
                         }
@@ -263,6 +260,8 @@ export default function SignUp() {
                     </Grid>
                     <Grid item xs={12} sm={4}>
                       <Button
+                        fullWidth
+                        size='large'
                         variant={
                           activeForm === "Donor" ? "contained" : "outlined"
                         }
@@ -273,6 +272,9 @@ export default function SignUp() {
                     </Grid>
                     <Grid item xs={12} sm={4}>
                       <Button
+                        fullWidth
+                        size='large'
+
                         variant={
                           activeForm === "Admin" ? "contained" : "outlined"
                         }
@@ -283,10 +285,10 @@ export default function SignUp() {
                     </Grid>
                   </Grid>
 
-                  <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                  <Avatar sx={{ m: 1, mt: 3, bgcolor: 'secondary.main' }}>
                     <LockOutlinedIcon />
                   </Avatar>
-                  <Typography component="h1" variant="h5">
+                  <Typography component="h1" variant="h5" marginBottom={3}>
                     Sign up
                   </Typography>
 
@@ -295,18 +297,18 @@ export default function SignUp() {
                       <Grid item xs={12} sm={6}>
                         <TextField
                           autoComplete="given-name"
-                          name="firstName"
+                          name="first_name"
                           required
                           fullWidth
-                          id="firstName"
+                          id="first_name"
                           label="First Name"
                           autoFocus
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.firstName}
-                          error={errors.firstName && touched.firstName}
+                          value={values.first_name}
+                          error={errors.first_name && touched.first_name}
                           helperText={
-                            errors.firstName && touched.firstName && errors.firstName
+                            errors.first_name && touched.first_name && errors.first_name
                           }
                         />
                       </Grid>
@@ -314,16 +316,16 @@ export default function SignUp() {
                         <TextField
                           required
                           fullWidth
-                          id="lastName"
+                          id="last_name"
                           label="Last Name"
-                          name="lastName"
+                          name="last_name"
                           autoComplete="family-name"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.lastName}
-                          error={errors.lastName && touched.lastName}
+                          value={values.last_name}
+                          error={errors.last_name && touched.last_name}
                           helperText={
-                            errors.lastName && touched.lastName && errors.lastName
+                            errors.last_name && touched.last_name && errors.last_name
                           }
                         />
                       </Grid>
@@ -538,6 +540,7 @@ export default function SignUp() {
                     </Grid>
                   </form>
                 </Box>
+                <Copyright sx={{ mt: 1, mb: 5 }} />
               </Container>
             </ThemeProvider>
           </Form>
