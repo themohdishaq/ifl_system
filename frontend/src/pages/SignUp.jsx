@@ -249,7 +249,6 @@ export default function SignUp() {
                       <Button
                         fullWidth
                         size='large'
-
                         variant={
                           activeForm === "Student" ? "contained" : "outlined"
                         }
