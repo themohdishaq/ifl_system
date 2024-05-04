@@ -12,7 +12,7 @@ const Donor = require("../Models/Donor");
 
 //route to approve case by admin
 router.post(
-  "/case_approve_by_admin/:id",
+  "/admin/case-approve-by-admin/:id",
   fetchStudent,
   [
     body("startDate", "Enterrhe start date of the case"),
@@ -68,8 +68,8 @@ router.post(
     }
   }
 );
-
-router.get("/get_all_requested_cases", fetchAdmin, async (req, res) => {
+// route to get all the case requested by students to approve
+router.get("/admin/get-all-requested-cases", fetchAdmin, async (req, res) => {
   try {
     let requests = await Request.find({ status: "requested" });
     res.json(requests);
@@ -78,7 +78,8 @@ router.get("/get_all_requested_cases", fetchAdmin, async (req, res) => {
   }
 });
 
-router.get("/get_all_approved_cases", fetchAdmin, async (req, res) => {
+//route to all cases approved by admin
+router.get("/admin/get-all-approved-cases", fetchAdmin, async (req, res) => {
   try {
     let approved_cases = await ApprovedCase.find();
     res.json(approved_cases);
@@ -87,7 +88,8 @@ router.get("/get_all_approved_cases", fetchAdmin, async (req, res) => {
   }
 });
 
-router.get("/get_all_completed_cases", fetchAdmin, async (req, res) => {
+// route to get all cases completed by donors
+router.get("/admin/get-all-completed-cases", fetchAdmin, async (req, res) => {
   try {
     let completed_cases = await ApprovedCase.find({
       payments_completed: { $eq: "$total_payments" },
@@ -98,7 +100,8 @@ router.get("/get_all_completed_cases", fetchAdmin, async (req, res) => {
   }
 });
 
-router.get("/get_all_current_cases", fetchAdmin, async (req, res) => {
+// route to get all cases in progress
+router.get("/admin/get-all-current-cases", fetchAdmin, async (req, res) => {
   const currentDate = new Date();
   try {
     let current_cases = await ApprovedCase.find({
@@ -110,7 +113,8 @@ router.get("/get_all_current_cases", fetchAdmin, async (req, res) => {
   }
 });
 
-router.get("/get_all_past_cases", fetchAdmin, async (req, res) => {
+// route to get all past cases
+router.get("/admin/get-all-past-cases", fetchAdmin, async (req, res) => {
   const currentDate = new Date();
   try {
     let past_cases = await ApprovedCase.find({
@@ -122,7 +126,8 @@ router.get("/get_all_past_cases", fetchAdmin, async (req, res) => {
   }
 });
 
-router.get("/get_all_students", fetchAdmin, async (req, res) => {
+// route to get all students
+router.get("/admin/get-all-students", fetchAdmin, async (req, res) => {
   try {
     let students = await Student.find();
     res.json(students);
@@ -131,7 +136,8 @@ router.get("/get_all_students", fetchAdmin, async (req, res) => {
   }
 });
 
-router.get("/get_all_donors", fetchAdmin, async (req, res) => {
+// route to get all donors
+router.get("/admin/get-all-donors", fetchAdmin, async (req, res) => {
   try {
     let donors = await Donor.find();
     res.json(donors);
@@ -140,12 +146,29 @@ router.get("/get_all_donors", fetchAdmin, async (req, res) => {
   }
 });
 
-router.get("/get_requested_case_student/:id", fetchAdmin, async (req, res) => {
+// route to view details of requested case by student
+router.get("/admin/requested-case-details/:id", fetchAdmin, async (req, res) => {
   try {
-    let requested_case = await Request.populate("student");
-    res.json(requested_case);
+    const request = await Request.findById(req.params.id);
+    if (!request) {
+      return res.json("No case found");
+    }
+    return res.json(request);
   } catch (error) {
-    res.json("Error fetching student");
+    res.json("Error viewing case");
+  }
+});
+
+// route to view student profile by clicking on requested case
+router.get("/admin/requested-case-student-profile/:id", fetchAdmin, async (req, res) => {
+  try {
+    const request = await Request.findById(req.params.id).populate("student");
+    if (!request) {
+      return res.json("No student profile found");
+    }
+    return res.json(request.student);
+  } catch (error) {
+    res.json("Error viewing student profile");
   }
 });
 
