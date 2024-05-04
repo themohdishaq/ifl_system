@@ -62,4 +62,13 @@ const studentApplicationSchema = Yup.object().shape({
   description: Yup.string().required("Required"),
 });
 
-export {LoginSchema, SignupSchema, StudentSignupSchema, DonorSignupSchema, AdminSignupSchema, studentProfileSchema, studentApplicationSchema};
+const donorProfileSchema = Yup.object().shape({
+  first_name: Yup.string().required("Required"),
+  last_name: Yup.string().required("Required"),
+  email: Yup.string().email("Invalid email").required("Required"),
+  phone_no: Yup.string().required("Required"),
+  cnic: Yup.string().required("Required"),
+  profession: Yup.string().required("Required"),
+});
+
+export {LoginSchema, SignupSchema, StudentSignupSchema, DonorSignupSchema, AdminSignupSchema, studentProfileSchema, studentApplicationSchema, donorProfileSchema};

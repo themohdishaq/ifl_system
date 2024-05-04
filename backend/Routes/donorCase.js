@@ -36,7 +36,7 @@ router.get(
 //route to sponser case by donor
 
 router.post(
-  "/donor/sponser-case--by-donor/:id",
+  "/donor/sponser-case-by-donor/:id",
   fetchDonor,
   [body("commited_payments", "Enter the commited payments")],
   async (req, res) => {
