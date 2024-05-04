@@ -14,38 +14,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export default function StudentApplication() {
-  const studentApplicationMutation = useMutation({
-    mutationFn: async (values) => {
-      console.log(values);
-      try {
-        const response = await axios.post(
-          "http://localhost:3333/ifl_system/student/request_by_student",
-          values,
-          {
-            headers: {
-              "auth-token":
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYzMWY4MmZiZWNlMmZkYjgwYzlkM2RkIn0sImlhdCI6MTcxNDY2MTI3MH0.A-Q5S9TOOOG-rralUaNzOZ3I5cwswn8WYp_o34yoHBM",
-            },
-          }
-        );
-        return response.data;
-      } catch (error) {
-        throw error;
-      }
-    },
-    onError: (error) => {
-      console.log(error);
-      toast.error("Error sending request...");
-    },
-    onSuccess: (data) => {
-      if (data && data.error) {
-        toast.error(data.error);
-      } else {
-        toast.success("Request sent successfully!");
-      }
-    },
-  });
-
     const studentApplicationMutation = useMutation({
         mutationFn: async (values) => {
             console.log(values);
