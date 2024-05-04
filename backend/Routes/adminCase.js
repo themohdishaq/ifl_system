@@ -6,6 +6,9 @@ const fetchAdmin = require("../Middleware/fetchAdmin");
 const Request = require("../Models/Request");
 const Admin = require("../Models/Admin");
 const ApprovedCase = require("../Models/ApprovedCase");
+const Notifications = require("../Models/Notifications");
+const Student = require("../Models/Student");
+const Donor = require("../Models/Donor");
 
 //route to approve case by admin
 router.post(
@@ -59,7 +62,7 @@ router.post(
           "Your Case has been approved successfully with description " +
           request_by_student.description,
       });
-      res.json("Case  been approved successfully");
+      res.json("Case been approved successfully");
     } catch (error) {
       res.json("Error sending request");
     }
@@ -72,6 +75,77 @@ router.get("/get_all_requested_cases", fetchAdmin, async (req, res) => {
     res.json(requests);
   } catch (error) {
     res.json("Error fetching requests");
+  }
+});
+
+router.get("/get_all_approved_cases", fetchAdmin, async (req, res) => {
+  try {
+    let approved_cases = await ApprovedCase.find();
+    res.json(approved_cases);
+  } catch (error) {
+    res.json("Error fetching approved cases");
+  }
+});
+
+router.get("/get_all_completed_cases", fetchAdmin, async (req, res) => {
+  try {
+    let completed_cases = await ApprovedCase.find({
+      payments_completed: { $eq: "$total_payments" },
+    });
+    res.json(completed_cases);
+  } catch (error) {
+    res.json("Error fetching completed cases");
+  }
+});
+
+router.get("/get_all_current_cases", fetchAdmin, async (req, res) => {
+  const currentDate = new Date();
+  try {
+    let current_cases = await ApprovedCase.find({
+      endDate: { $gt: currentDate },
+    });
+    res.json(current_cases);
+  } catch (error) {
+    res.json("Error fetching current cases");
+  }
+});
+
+router.get("/get_all_past_cases", fetchAdmin, async (req, res) => {
+  const currentDate = new Date();
+  try {
+    let past_cases = await ApprovedCase.find({
+      endDate: { $lt: currentDate },
+    });
+    res.json(past_cases);
+  } catch (error) {
+    res.json("Error fetching past cases");
+  }
+});
+
+router.get("/get_all_students", fetchAdmin, async (req, res) => {
+  try {
+    let students = await Student.find();
+    res.json(students);
+  } catch (error) {
+    res.json("Error fetching students");
+  }
+});
+
+router.get("/get_all_donors", fetchAdmin, async (req, res) => {
+  try {
+    let donors = await Donor.find();
+    res.json(donors);
+  } catch (error) {
+    res.json("Error fetching donors");
+  }
+});
+
+router.get("/get_requested_case_student/:id", fetchAdmin, async (req, res) => {
+  try {
+    let requested_case = await Request.populate("student");
+    res.json(requested_case);
+  } catch (error) {
+    res.json("Error fetching student");
   }
 });
 

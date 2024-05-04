@@ -46,40 +46,68 @@ export default function StudentApplication() {
     },
   });
 
-  return (
-    <div>
-      <Formik
-        initialValues={{
-          title: "",
-          description: "",
-        }}
-        validationSchema={studentApplicationSchema}
-        onSubmit={(values) => {
-          studentApplicationMutation.mutate({
-            title: values.title,
-            description: values.description,
-          });
-        }}
-      >
-        {({
-          errors,
-          touched,
-          values,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-        }) => (
-          <Form>
-            <Grid container spacing={3} className="p-5 md:p-8">
-              <Grid item xs={12}>
-                <Typography variant="h4">User Profile</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Link href="/">Home </Link>
-                <Typography variant="body">/ </Typography>
-                <Link href="/messaging"> User Profile</Link>
-              </Grid>
-              {/* <Grid item xs={12} lg={4}>
+    const studentApplicationMutation = useMutation({
+        mutationFn: async (values) => {
+            console.log(values);
+            try {
+                const response = await axios.post('http://localhost:3333/ifl_system/studentCase/student/request_by_student', values, {
+                    headers: {
+                        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYzMjExNGZhMjBiYmNhZjY4NTRkMThmIn0sImlhdCI6MTcxNDY3OTMxNX0.u4pVX4XnicYm88BvTjpdXHfrTggcQEcj2rf144Jwokw'
+                    }
+                });
+                console.log(response)
+            } catch (error) {
+                throw error;
+            }
+        },
+        onError: (error) => {
+            console.log(error);
+            toast.error("Error sending request...");
+        },
+        onSuccess: (data) => {
+            if (data && data.error) {
+                toast.error(data.error);
+            } else {
+                toast.success("Request sent successfully!");
+            }
+        },
+    });
+
+    return (
+        <div>
+            <Formik
+                initialValues={{
+                    title: "",
+                    description: ""
+                }}
+                validationSchema={studentApplicationSchema}
+                onSubmit={(values) => {
+                    studentApplicationMutation.mutate({
+                        title: values.title,
+                        description: values.description,
+                    });
+                }}
+            >
+                {({
+                    errors,
+                    touched,
+                    values,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                }) => (
+                    <Form>
+                        <Grid container spacing={3} className="p-5 md:p-8">
+                            <Grid item xs={12}>
+                                <Typography variant="h4">User Profile</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Link href="/">Home </Link>
+                                <Typography variant="body">/ </Typography>
+                                <Link href="/messaging"> User Profile</Link>
+                            </Grid>
+                            {/* <Grid item xs={12} lg={4}>
+
                                 <Paper className="flex flex-col justify-center items-center p-1 md:p-5">
                                     <div className="m-5 rounded-full "> */}
               {/* <input
