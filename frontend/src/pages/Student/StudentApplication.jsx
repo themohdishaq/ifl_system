@@ -11,12 +11,12 @@ export default function StudentApplication() {
         mutationFn: async (values) => {
             console.log(values);
             try {
-                const response = await axios.post('http://localhost:3333/ifl_system/student/request_by_student', values, {
+                const response = await axios.post('http://localhost:3333/ifl_system/studentCase/student/request_by_student', values, {
                     headers: {
-                        'auth-token': ''
+                        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYzMjExNGZhMjBiYmNhZjY4NTRkMThmIn0sImlhdCI6MTcxNDY3OTMxNX0.u4pVX4XnicYm88BvTjpdXHfrTggcQEcj2rf144Jwokw'
                     }
                 });
-                return response.data;
+                console.log(response)
             } catch (error) {
                 throw error;
             }
