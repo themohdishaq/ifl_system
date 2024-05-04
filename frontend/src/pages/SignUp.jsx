@@ -1,37 +1,47 @@
-import axios from 'axios';
+import axios from "axios";
 import * as Yup from "yup";
-import { React, useEffect, useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
-import userAuthStore from '../store/userAuthStore/userAuthStore';
-import { Form, Formik } from 'formik';
-import { useMutation } from '@tanstack/react-query';
-import { AdminSignupSchema, DonorSignupSchema, SignupSchema, StudentSignupSchema } from '../utils/Schemas';
+import { React, useEffect, useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import userAuthStore from "../store/userAuthStore/userAuthStore";
+import { Form, Formik } from "formik";
+import { useMutation } from "@tanstack/react-query";
+import {
+  AdminSignupSchema,
+  DonorSignupSchema,
+  SignupSchema,
+  StudentSignupSchema,
+} from "../utils/Schemas";
 const theme = createTheme();
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -39,7 +49,6 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-
   const logout = userAuthStore((state) => state.logout);
   useEffect(() => {
     logout();
@@ -50,9 +59,9 @@ export default function SignUp() {
   const updateUser = userAuthStore((state) => state.setUser);
 
   const changeForm = (value) => {
-    console.log(value)
+    console.log(value);
     setActiveForm(value);
-    console.log(activeForm)
+    console.log(activeForm);
   };
 
   const signUpMutation = useMutation({
@@ -79,14 +88,14 @@ export default function SignUp() {
 
     onError: (error) => {
       console.log(error);
-      toast.error("Error creating  user...");
+      // toast.error("Error creating  user...");
     },
     onSuccess: (data) => {
       if (data.data.error) {
-        toast.error(data.data.error, {});
+        // toast.error(data.data.error, {});
         return;
       }
-      toast.success(data.data.message, {});
+      // toast.success(data.data.message, {});
       localStorage.setItem("access", data.data.access);
       console.log(data.data);
       setTimeout(() => {
@@ -98,13 +107,13 @@ export default function SignUp() {
 
   let validation;
   switch (activeForm) {
-    case 'Student':
+    case "Student":
       validation = StudentSignupSchema;
       break;
-    case 'Donor':
+    case "Donor":
       validation = DonorSignupSchema;
       break;
-    case 'Admin':
+    case "Admin":
       validation = AdminSignupSchema;
       break;
     default:
@@ -113,7 +122,7 @@ export default function SignUp() {
 
   let initialFormValue;
   switch (activeForm) {
-    case 'Student':
+    case "Student":
       initialFormValue = {
         email: "",
         first_name: "",
@@ -122,10 +131,10 @@ export default function SignUp() {
         phone_no: "",
         cnic: "",
         institution: "",
-        class_level: ""
+        class_level: "",
       };
       break;
-    case 'Donor':
+    case "Donor":
       initialFormValue = {
         email: "",
         first_name: "",
@@ -133,10 +142,10 @@ export default function SignUp() {
         password: "",
         phone_no: "",
         cnic: "",
-        profession: ""
+        profession: "",
       };
       break;
-    case 'Admin':
+    case "Admin":
       initialFormValue = {
         email: "",
         first_name: "",
@@ -157,7 +166,7 @@ export default function SignUp() {
   const handleValues = (values) => {
     let valuesAssign;
     switch (activeForm) {
-      case 'Student':
+      case "Student":
         valuesAssign = {
           email: values.email,
           first_name: values.first_name,
@@ -169,7 +178,7 @@ export default function SignUp() {
           class_level: values.class_level,
         };
         break;
-      case 'Donor':
+      case "Donor":
         valuesAssign = {
           email: values.email,
           first_name: values.first_name,
@@ -180,7 +189,7 @@ export default function SignUp() {
           profession: values.profession,
         };
         break;
-      case 'Admin':
+      case "Admin":
         valuesAssign = {
           email: values.email,
           first_name: values.first_name,
@@ -198,7 +207,7 @@ export default function SignUp() {
         };
     }
     return valuesAssign;
-  }
+  };
 
   return (
     <div>
@@ -230,25 +239,37 @@ export default function SignUp() {
         }) => (
           <Form>
             <ThemeProvider theme={defaultTheme}>
-              <Container component="main" maxWidth="sm" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+              <Container
+                component="main"
+                maxWidth="sm"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <CssBaseline />
                 <Box
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                     boxShadow: 3,
-                    padding: '6%',
-                    margin: '6%',
+                    padding: "6%",
+                    margin: "6%",
                     borderRadius: 2,
                   }}
                 >
+                  <Typography component="h6" variant="h6">
+                    Create {activeForm} Account
+                  </Typography>
 
                   <Grid container spacing={3} justifyContent="center">
                     <Grid item xs={12} sm={4}>
                       <Button
                         fullWidth
-                        size='large'
+                        size="large"
                         variant={
                           activeForm === "Student" ? "contained" : "outlined"
                         }
@@ -260,7 +281,7 @@ export default function SignUp() {
                     <Grid item xs={12} sm={4}>
                       <Button
                         fullWidth
-                        size='large'
+                        size="large"
                         variant={
                           activeForm === "Donor" ? "contained" : "outlined"
                         }
@@ -272,8 +293,7 @@ export default function SignUp() {
                     <Grid item xs={12} sm={4}>
                       <Button
                         fullWidth
-                        size='large'
-
+                        size="large"
                         variant={
                           activeForm === "Admin" ? "contained" : "outlined"
                         }
@@ -284,7 +304,7 @@ export default function SignUp() {
                     </Grid>
                   </Grid>
 
-                  <Avatar sx={{ m: 1, mt: 3, bgcolor: 'secondary.main' }}>
+                  <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                     <LockOutlinedIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5" marginBottom={3}>
@@ -307,7 +327,9 @@ export default function SignUp() {
                           value={values.first_name}
                           error={errors.first_name && touched.first_name}
                           helperText={
-                            errors.first_name && touched.first_name && errors.first_name
+                            errors.firstName &&
+                            touched.firstName &&
+                            errors.firstName
                           }
                         />
                       </Grid>
@@ -324,11 +346,13 @@ export default function SignUp() {
                           value={values.last_name}
                           error={errors.last_name && touched.last_name}
                           helperText={
-                            errors.last_name && touched.last_name && errors.last_name
+                            errors.lastName &&
+                            touched.lastName &&
+                            errors.lastName
                           }
                         />
                       </Grid>
-                      {activeForm === 'Student' && (
+                      {activeForm === "Student" && (
                         <>
                           <Grid item xs={12} sm={6}>
                             <TextField
@@ -342,7 +366,9 @@ export default function SignUp() {
                               value={values.phone_no}
                               error={errors.phone_no && touched.phone_no}
                               helperText={
-                                errors.phone_no && touched.phone_no && errors.phone_no
+                                errors.phone_no &&
+                                touched.phone_no &&
+                                errors.phone_no
                               }
                             />
                           </Grid>
@@ -374,7 +400,9 @@ export default function SignUp() {
                               value={values.institution}
                               error={errors.institution && touched.institution}
                               helperText={
-                                errors.institution && touched.institution && errors.institution
+                                errors.institution &&
+                                touched.institution &&
+                                errors.institution
                               }
                             />
                           </Grid>
@@ -391,13 +419,15 @@ export default function SignUp() {
                               value={values.class_level}
                               error={errors.class_level && touched.class_level}
                               helperText={
-                                errors.class_level && touched.class_level && errors.class_level
+                                errors.class_level &&
+                                touched.class_level &&
+                                errors.class_level
                               }
                             />
                           </Grid>
                         </>
                       )}
-                      {activeForm === 'Donor' && (
+                      {activeForm === "Donor" && (
                         <>
                           <Grid item xs={12} sm={6}>
                             <TextField
@@ -411,7 +441,9 @@ export default function SignUp() {
                               value={values.phone_no}
                               error={errors.phone_no && touched.phone_no}
                               helperText={
-                                errors.phone_no && touched.phone_no && errors.phone_no
+                                errors.phone_no &&
+                                touched.phone_no &&
+                                errors.phone_no
                               }
                             />
                           </Grid>
@@ -443,13 +475,15 @@ export default function SignUp() {
                               value={values.profession}
                               error={errors.profession && touched.profession}
                               helperText={
-                                errors.profession && touched.profession && errors.profession
+                                errors.profession &&
+                                touched.profession &&
+                                errors.profession
                               }
                             />
                           </Grid>
                         </>
                       )}
-                      {activeForm === 'Admin' && (
+                      {activeForm === "Admin" && (
                         <>
                           <Grid item xs={12}>
                             <TextField
@@ -463,7 +497,9 @@ export default function SignUp() {
                               value={values.admin_role}
                               error={errors.admin_role && touched.admin_role}
                               helperText={
-                                errors.admin_role && touched.admin_role && errors.admin_role
+                                errors.admin_role &&
+                                touched.admin_role &&
+                                errors.admin_role
                               }
                             />
                           </Grid>
@@ -500,7 +536,9 @@ export default function SignUp() {
                           value={values.password}
                           error={errors.password && touched.password}
                           helperText={
-                            errors.password && touched.password && errors.password
+                            errors.password &&
+                            touched.password &&
+                            errors.password
                           }
                         />
                       </Grid>
