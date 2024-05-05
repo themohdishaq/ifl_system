@@ -16,6 +16,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -125,10 +126,6 @@ function DonorDashboard() {
                 <Box
                     component="main"
                     sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[100]
-                                : theme.palette.grey[900],
                         flexGrow: 1,
                         overflow: 'hidden',
                     }}
@@ -218,12 +215,22 @@ function DonorDashboard() {
                                     {cases.map((caseItem, index) => (
                                         <Card key={index}>
                                             <CardContent>
-                                                <Typography variant="h6" component="div">
-                                                    {caseItem.title}
-                                                </Typography>
-                                                <Typography variant="body1" color="text.secondary">
-                                                    {caseItem.description}
-                                                </Typography>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={12} md={8}>
+                                                        <Typography variant="h6" component="div">
+                                                            {caseItem.title}
+                                                        </Typography>
+                                                        <Typography variant="body1" color="text.secondary">
+                                                            {caseItem.description}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography variant="h6" component="div">
+                                                            Payment
+                                                        </Typography>
+                                                        <Button variant="contained" color="primary">Donate</Button>
+                                                        </Grid>
+                                                </Grid>
                                             </CardContent>
                                         </Card>
                                     ))}
