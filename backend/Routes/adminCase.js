@@ -71,9 +71,7 @@ router.post(
 // route to get all the case requested by students to approv`e
 router.get("/admin/get-all-requested-cases", fetchAdmin, async (req, res) => {
   try {
-    let requests = await Request.find({ status: "pending" }).populate(
-      "student"
-    );
+    let requests = await Request.find({ status: "pending" });
     console.log(requests);
     res.json(requests);
   } catch (error) {
