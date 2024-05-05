@@ -15,6 +15,7 @@ import StudentApplication from "./pages/Student/StudentApplication";
 import StudentCurrentCases from "./pages/Student/StudentCurrentCases";
 import DonorDashboard from "./pages/Donor/DonorDashboard";
 import DonorProfile from "./pages/Donor/DonorProfile";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
           <Route path="/student_current_cases" element={<StudentCurrentCases/>} />
           <Route path="/donor_profile" element={<DonorProfile/>} />
           <Route path="/donor_dashboard" element={<DonorDashboard/>} />
+          <Route path="/admin_dashboard" element={<AdminDashboard/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn/>} />
           <Route path="/user_dashboard" element={<UserDashboard />} />
