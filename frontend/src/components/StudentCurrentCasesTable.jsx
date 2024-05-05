@@ -4,26 +4,28 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
+import { DialogTitle, DialogContent, DialogActions } from "@mui/material"; // Import the necessary components from Material-UI
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
 const Example = () => {
   const [validationErrors, setValidationErrors] = useState({});
 
   const getCases = async () => {
     try {
-      const url = 'http://localhost:3333/ifl_system/studentCase/student/get_all_requests_by_student';
+      const url =
+        "http://localhost:3333/ifl_system/studentCase/student/get_all_requests_by_student";
       const response = await axios.get(url, {
         headers: {
-          "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYzMjExNGZhMjBiYmNhZjY4NTRkMThmIn0sImlhdCI6MTcxNDczNjQxNH0.Gfzbn1HF71FZm1AcOn-ZyrioiqQLK1jrECzVEUh9yI4",
+          "auth-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYzMjExNGZhMjBiYmNhZjY4NTRkMThmIn0sImlhdCI6MTcxNDczNjQxNH0.Gfzbn1HF71FZm1AcOn-ZyrioiqQLK1jrECzVEUh9yI4",
         },
       });
 
       if (!response.data) {
-        throw new Error('Error fetching student');
+        throw new Error("Error fetching student");
       }
 
-      console.log("object");
       return response.data;
     } catch (error) {
       console.log(error);
@@ -32,7 +34,7 @@ const Example = () => {
   };
 
   const { isPending, data } = useQuery({
-    queryKey: ['request_cases'],
+    queryKey: ["request_cases"],
     queryFn: getCases,
   });
 
@@ -87,13 +89,9 @@ const Example = () => {
     [validationErrors]
   );
 
-  if (isPending) {
-    return <>Loading</>;
-  }
-
   const table = useMaterialReactTable({
     columns,
-    data: data,
+    data,
     getRowId: (row) => row.id,
     muiToolbarAlertBannerProps: isPending
       ? {
@@ -106,7 +104,7 @@ const Example = () => {
         minHeight: "500px",
       },
     },
-   
+
     renderCreateRowDialogContent: ({ table, row, internalEditComponents }) => (
       <>
         <DialogTitle variant="h3">Create New User</DialogTitle>
@@ -120,7 +118,7 @@ const Example = () => {
         </DialogActions>
       </>
     ),
-   
+
     renderEditRowDialogContent: ({ table, row, internalEditComponents }) => (
       <>
         <DialogTitle variant="h3">Edit User</DialogTitle>

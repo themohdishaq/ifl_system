@@ -68,12 +68,16 @@ router.post(
     }
   }
 );
-// route to get all the case requested by students to approve
+// route to get all the case requested by students to approv`e
 router.get("/admin/get-all-requested-cases", fetchAdmin, async (req, res) => {
   try {
-    let requests = await Request.find({ status: "requested" });
+    let requests = await Request.find({ status: "pending" }).populate(
+      "student"
+    );
+    console.log(requests);
     res.json(requests);
   } catch (error) {
+    console.log(error);
     res.json("Error fetching requests");
   }
 });
@@ -83,6 +87,7 @@ router.get("/admin/get-all-approved-cases", fetchAdmin, async (req, res) => {
   try {
     let approved_cases = await ApprovedCase.find();
     res.json(approved_cases);
+    1;
   } catch (error) {
     res.json("Error fetching approved cases");
   }
@@ -147,29 +152,37 @@ router.get("/admin/get-all-donors", fetchAdmin, async (req, res) => {
 });
 
 // route to view details of requested case by student
-router.get("/admin/requested-case-details/:id", fetchAdmin, async (req, res) => {
-  try {
-    const request = await Request.findById(req.params.id);
-    if (!request) {
-      return res.json("No case found");
+router.get(
+  "/admin/requested-case-details/:id",
+  fetchAdmin,
+  async (req, res) => {
+    try {
+      const request = await Request.findById(req.params.id);
+      if (!request) {
+        return res.json("No case found");
+      }
+      return res.json(request);
+    } catch (error) {
+      res.json("Error viewing case");
     }
-    return res.json(request);
-  } catch (error) {
-    res.json("Error viewing case");
   }
-});
+);
 
 // route to view student profile by clicking on requested case
-router.get("/admin/requested-case-student-profile/:id", fetchAdmin, async (req, res) => {
-  try {
-    const request = await Request.findById(req.params.id).populate("student");
-    if (!request) {
-      return res.json("No student profile found");
+router.get(
+  "/admin/requested-case-student-profile/:id",
+  fetchAdmin,
+  async (req, res) => {
+    try {
+      const request = await Request.findById(req.params.id).populate("student");
+      if (!request) {
+        return res.json("No student profile found");
+      }
+      return res.json(request.student);
+    } catch (error) {
+      res.json("Error viewing student profile");
     }
-    return res.json(request.student);
-  } catch (error) {
-    res.json("Error viewing student profile");
   }
-});
+);
 
 module.exports = router;
