@@ -8,6 +8,7 @@ const Donor = require("../Models/Donor");
 const Admin = require("../Models/Admin");
 const fetchStudent = require("../Middleware/fetchStudent");
 const fetchDonor = require("../Middleware/fetchDonor");
+const fetchAdmin = require("../Middleware/fetchAdmin");
 require("dotenv").config({ path: "./.env" });
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -444,5 +445,18 @@ router.post(
     }
   }
 );
+
+router.get('/admin/get-profile', fetchAdmin, async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.user.id).select('-password');
+    if (!admin) {
+      return res.json('Admin not found');
+    }
+    res.json(admin);
+  } catch (error) {
+    console.log(error);
+    return res.json('Error getting admin profile');
+  }
+});
 
 module.exports = router;
