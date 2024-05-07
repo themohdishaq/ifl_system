@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 const ApprovedCaseSchema = new Schema({
   admin: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "admins",
     required: true,
   },
   request: {

@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 const RequestSchema = new Schema({
   student: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "students",
     required: true,
   },
   status: {
