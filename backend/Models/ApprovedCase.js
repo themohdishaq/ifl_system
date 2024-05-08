@@ -8,6 +8,7 @@ const ApprovedCaseSchema = new Schema({
   },
   request: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "requests",
     required: true,
   },
   startDate: {
@@ -24,7 +25,8 @@ const ApprovedCaseSchema = new Schema({
   },
   postedDate: {
     type: Date,
-    required: true,
+    default: Date.now,
+    
   },
   total_payments: {
     type: Number,
