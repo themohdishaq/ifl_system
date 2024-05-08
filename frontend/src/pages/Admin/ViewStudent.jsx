@@ -2,6 +2,25 @@ import { Button, Card, Grid, Typography } from '@mui/material'
 import React from 'react'
 
 export default function ViewStudent() {
+
+    const getStudentDetails = async () => {
+        try {
+            const url = `http://localhost:3333/ifl_system/admin/approved-case-student-profile/${id}`;
+            const response = await axios.get(url, {
+                headers: {
+                    "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyODFkMGJhODI3MzY1Yzc2NjZkZmU5In0sImlhdCI6MTcxNTE3MzY2Nn0.ZA9iJlUDnnqHFgorD7oeELm3G_qsgi7L-_C75My7BHQ"
+                }
+            });
+            console.log(response);
+            if (!response.data) {
+                throw new Error('Error fetching student');
+            }
+            return response.data;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className=' h-screen bg-slate-300 flex justify-center items-center'>
             <Card sx={{

@@ -9,6 +9,7 @@ const ApprovedCase = require("../Models/ApprovedCase");
 const Notifications = require("../Models/Notifications");
 const Student = require("../Models/Student");
 const Donor = require("../Models/Donor");
+const WorksOn = require("../Models/WorksOn");
 
 //route to approve case by admin
 router.post(
@@ -39,9 +40,7 @@ router.post(
         total_payments: total_payments,
         payments_completed: 0,
       });
-      if (!approved_case) {
-        return res.json("Error sending request");
-      }
+    
       await Request.findByIdAndUpdate(req.params.id, {
         status: "approved",
       });
@@ -64,14 +63,16 @@ router.post(
       });
       res.json("Case been approved successfully");
     } catch (error) {
+      console.log(error)
       res.json("Error sending request");
     }
   }
 );
+
 // route to get all the case requested by students to approve
 router.get("/admin/get-all-requested-cases", fetchAdmin, async (req, res) => {
   try {
-    let requests = await Request.find({ status: "requested" });
+    let requests = await Request.find({ status: "pending" });
     res.json(requests);
   } catch (error) {
     res.json("Error fetching requests");
@@ -167,6 +168,38 @@ router.get("/admin/requested-case-student-profile/:id", fetchAdmin, async (req, 
       return res.json("No student profile found");
     }
     return res.json(request.student);
+  } catch (error) {
+    res.json("Error viewing student profile");
+  }
+});
+
+// route to view donor profile by clicking on approved case
+router.get("/admin/approved-case-donor-profile", fetchAdmin, async (req, res) => {
+  try {
+    const approvedCase = await WorksOn.findById(req.params.id);
+    const donor = await Donor.find({donor: approvedCase.donor});
+    const request = await Request.find
+  } catch (error) {
+    res.json("Error viewing donor profile");
+  }
+});
+
+// route to view student profile by clicking on approved case
+router.get("/admin/approved-case-student-profile/:id", fetchAdmin, async (req, res) => {
+  try {
+    const approvedCase = await ApprovedCase.findById(req.params.id);
+    if (!approvedCase) {
+      return res.json("No approved case found");
+    }
+    const request = await Request.find({request: approvedCase.request});
+    if (!request) {
+      return res.json("No student profile found");
+    }
+    const student= await Student.findOne({student:request.student});
+    if (!student) {
+      return res.json("No student profile found");
+    }
+    return res.json(student);  
   } catch (error) {
     res.json("Error viewing student profile");
   }
