@@ -79,7 +79,7 @@ function App() {
           <Route path="/admin_dashboard" element={<AdminDashboard/>} />
           <Route path="/case" element={<Case/>} />
           <Route path="/application" element={<Application/>} />
-          <Route path="/view_donor" element={<ViewDonor/>} />
+          <Route path="/view_donor/:id" element={<ViewDonor/>} />
           <Route path="/view_student" element={<ViewStudent/>} />
 
           <Route path="/signup" element={<SignUp />} />
