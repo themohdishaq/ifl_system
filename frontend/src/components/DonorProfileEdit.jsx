@@ -230,7 +230,6 @@ export default function DonorProfileEdit(props) {
                             </Paper>
                         </Grid>
                     </Grid>
-
                 )}
             </Formik>
         </div>
