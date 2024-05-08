@@ -16,6 +16,11 @@ import StudentCurrentCases from "./pages/Student/StudentCurrentCases";
 import DonorDashboard from "./pages/Donor/DonorDashboard";
 import DonorProfile from "./pages/Donor/DonorProfile";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import DonorDonationCase from "./pages/Donor/DonorDonationCase";
+import Case from "./pages/Admin/Case";
+import Application from "./pages/Admin/Application";
+import ViewDonor from "./pages/Admin/ViewDonor";
+import ViewStudent from "./pages/Admin/ViewStudent";
 
 
 function App() {
@@ -70,7 +75,13 @@ function App() {
           <Route path="/student_current_cases" element={<StudentCurrentCases/>} />
           <Route path="/donor_profile" element={<DonorProfile/>} />
           <Route path="/donor_dashboard" element={<DonorDashboard/>} />
+          <Route path="/donor_requested_case_view" element={<DonorDonationCase/>} />
           <Route path="/admin_dashboard" element={<AdminDashboard/>} />
+          <Route path="/case" element={<Case/>} />
+          <Route path="/application" element={<Application/>} />
+          <Route path="/view_donor" element={<ViewDonor/>} />
+          <Route path="/view_student" element={<ViewStudent/>} />
+
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn/>} />
           <Route path="/user_dashboard" element={<UserDashboard />} />
